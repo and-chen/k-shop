@@ -1,0 +1,24 @@
+{
+  "name": "k-shop",
+  "version": "1.0.0",
+  "description": "a local trading/selling shop web system",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/and-chen/k-shop.git"
+  },
+  "author": "Keaton Chak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/and-chen/k-shop/issues"
+  },
+  "homepage": "https://github.com/and-chen/k-shop#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.15"
+  }
+}
