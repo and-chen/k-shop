@@ -1,9 +1,19 @@
 var express = require('express');
+var {Pool} = require('pg');
 
 var app = express();
+var pool = new Pool({
+    user:'postgres',
+    host:'localhost',
+    database: 'postgres',
+    password: 'admin',
+    port: 5432
+
+
+})
 
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({extended: true}));
 
 var options = {
     dotfile: 'ignore',
@@ -20,6 +30,7 @@ app.post('/login', function (req, resp) {
     var values = [req.body.username, req.body.password]
 
     pool.query(text, values, (err, res) => {
+        console.log(res)
         console.log(err, res.rows.length)
         if (res.rows.length != 0) {
             resp.send("success")
@@ -33,7 +44,7 @@ app.post('/login', function (req, resp) {
     })
 
 });
-app.get()
+
 
 var PORT = 3000;
 app.listen(PORT, () => console.log("Server started on port " + PORT));
