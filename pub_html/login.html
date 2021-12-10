@@ -7,10 +7,12 @@
         <label for="fname">Username:</label><br>
         <input type="text" id="uname" name="uname" value=""><br>
         <label for="lname">Password:</label><br>
-        <input type="text" id="pass" name="pass" value=""><br><br>
+        <input  type="password" id="pass" name="pass" value=""><br><br>
     
       </form>
+      <div id = "faillogin"></div>
       <button onclick="login()">Login</button>
+    
     
 
 </body>
@@ -29,6 +31,18 @@
 
       success: function (data) {
         console.log(data)
+        if(data == 'success'){
+          location.href = "http://localhost:3000/index.html";
+
+        } 
+        if(data == "failure"){
+          var flogin =document.getElementById("faillogin");
+          flogin.innerHTML = "Password or Username is Incorrect"
+         
+
+
+
+        }
 
 
 
