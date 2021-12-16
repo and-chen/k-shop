@@ -1,6 +1,6 @@
 var express = require('express');
 var {Pool} = require('pg');
-
+var baserouter  = require("./routes/api/login")
 var app = express();
 var pool = new Pool({
     user:'postgres',
@@ -22,29 +22,8 @@ var options = {
 }
 
 app.use('/', express.static('./pub_html', options));
-
-app.post('/login', function (req, resp) {
-
-
-    var text = 'SELECT * FROM users WHERE username = $1 AND password = $2;'
-    var values = [req.body.username, req.body.password]
-
-    pool.query(text, values, (err, res) => {
-        console.log(res)
-        console.log(err, res.rows.length)
-        if (res.rows.length != 0) {
-            resp.send("success")
-
-
-        } else {
-            resp.send("failure")
-
-
-        }
-    })
-
-});
-
+app.use('/', baserouter)
 
 var PORT = 3000;
 app.listen(PORT, () => console.log("Server started on port " + PORT));
+module.export = pool;
