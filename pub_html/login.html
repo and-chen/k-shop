@@ -3,54 +3,42 @@
 
 <body>
 
-    <form id="login">
-        <label for="fname">Username:</label><br>
-        <input type="text" id="uname" name="uname" value=""><br>
-        <label for="lname">Password:</label><br>
-        <input  type="password" id="pass" name="pass" value=""><br><br>
-    
-      </form>
-      <div id = "faillogin"></div>
-      <button onclick="login()">Login</button>
-    
-    
+	<form id="login">
+		<label for="fname">Username:</label><br>
+		<input type="text" id="uname" name="uname" value=""><br>
+		<label for="lname">Password:</label><br>
+		<input type="password" id="pass" name="pass" value=""><br><br>
+
+	</form>
+	<div id="faillogin"></div>
+	<button onclick="login()">Login</button>
+
+
 
 </body>
 
 <script src="/scripts/jquery.min.js"></script>
-<script>  
-  function login() {
-    var uname = document.getElementById("uname");
-    var pass = document.getElementById("pass");
-    var json = { "username": uname.value,"password": pass.value }
+<script>
+	function login() {
+		var uname = document.getElementById("uname");
+		var pass = document.getElementById("pass");
+		var json = { "username": uname.value, "password": pass.value }
 
-    $.ajax({
-      method: "post",
-      url: "/login",
-      data: json,
+		$.ajax({
+			method: "post",
+			url: "/api/login",
+			data: json,
 
-      success: function (data) {
-        console.log(data)
-        if(data == 'success'){
-          location.href = "http://localhost:3000/index.html";
-
-        } 
-        if(data == "failure"){
-          var flogin =document.getElementById("faillogin");
-          flogin.innerHTML = "Password or Username is Incorrect"
-         
-
-
-
-        }
-
-
-
-      }
-
-    }
-    )
-  }
-
-
+			success: function (data) {
+				console.log(data)
+				if (data.rows.length > 0) {
+					location.href = "http://localhost:3000/index.html";
+				} else {
+					var flogin = document.getElementById("faillogin");
+					flogin.innerHTML = "Password or Username is Incorrect";
+				}
+			}
+		}
+		)
+	}
 </script>
