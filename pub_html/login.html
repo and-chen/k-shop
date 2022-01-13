@@ -30,7 +30,7 @@
 			data: json,
 
 			success: function (data) {
-				console.log(data)
+				console.log("[AJAX]", data)
 				if (data.rows.length > 0) {
 					location.href = "http://localhost:3000/index.html";
 				} else {

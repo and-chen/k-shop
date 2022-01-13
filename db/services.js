@@ -14,6 +14,5 @@ function signup(request,response){
 
 }
 
-
-module.exports = getLogin;
-module.exports = signup;
+module.exports.signup = signup;
+module.exports.getLogin = getLogin;

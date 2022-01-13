@@ -1,11 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var getLogin = require('../db/services');
-var signup = require('../db/services');
+var services = require('../db/services');
 
 
-router.post('/login', getLogin);
-
-router.post('/signup', signup);
+router.post('/login', services.getLogin);
 
 module.exports = router;
