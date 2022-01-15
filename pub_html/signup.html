@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+	<form id="login">
+		<label for="fname">Username:</label><br>
+		<input type="text" id="uname" name="uname" value=""><br>
+		<label for="lname">Password:</label><br>
+		<input type="password" id="pass" name="pass" value=""><br><br>
+        <label for="lname">Re-enter Password:</label><br>
+		<input type="password" id="pass2" name="pass2" value=""><br><br>
+
+
+	</form>
+	<div id="failsignup"></div>
+	<button onclick="login()">Login</button>
+
+
+
+</body>
+
+<script src="/scripts/jquery.min.js"></script>
+<script>
+	function login() {
+		var uname = document.getElementById("uname");
+		var pass = document.getElementById("pass");
+        var pass2 = document.getElementById("pass2");
+        
+        if(pass.value!=pass2.value){
+            var failsignup = document.getElementById("failsignup");
+            failsignup.innerHTML = "Passwords are different";
+
+
+        }
+        else{
+		var json = { "username": uname.value, "password": pass.value }
+
+		$.ajax({
+			method: "post",
+			url: "/api/signup",
+			data: json,
+
+			success: function (data) {
+				console.log("[AJAX]", data)
+            
+				
+					location.href = "http://localhost:3000/index.html";
+				
+			},
+			error: function (request, status,error){
+				console.log(request);
+				console.log(status);
+				console.log(error);
+				console.log(request["responseJSON"].message);
+				if(request["responseJSON"].message == "duplicate key value violates unique constraint \"users_username_key\""){
+			var failsignup = document.getElementById("failsignup");
+					failsignup.innerHTML = "Username already taken";
+				}
+			}
+		}
+		)
+    }
+	}
+</script>
