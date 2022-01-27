@@ -1,8 +1,7 @@
 var pool = require('../database/db.js');
 
-// Find user by email
+// get user by username and password
 function getUser(username, password, callback) {
-
     var query = "SELECT * FROM users WHERE username = $1 AND password = $2;";
     var values = [username, password];
     pool.query(query, values, (error, result) => {

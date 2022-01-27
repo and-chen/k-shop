@@ -2,23 +2,26 @@
 <html>
 
 <body>
+	<h2>Login</h2>
 
-	<form id="login">
-		<label for="fname">Username:</label><br>
-		<input type="text" id="uname" name="uname" value=""><br>
-		<label for="lname">Password:</label><br>
-		<input type="password" id="pass" name="pass" value=""><br><br>
+	<form action="/login" method="post">
+		<label for="username">Username:</label><br>
+		<input type="text" id="username" name="username" value=""><br>
+		<label for="password">Password:</label><br>
+		<input type="password" id="password" name="password" value=""><br><br>
 
+		<div id="failedLogin"></div>
+
+		<button type="submit">Login</button>
 	</form>
-	<div id="faillogin"></div>
-	<button onclick="login()">Login</button>
+
 	<button onclick="signup()">Signup</button>
 
 
 
 </body>
 
-<script src="/scripts/jquery.min.js"></script>
+<script src="../scripts/jquery.min.js"></script>
 <script>
 	function login() {
 		var uname = document.getElementById("uname");

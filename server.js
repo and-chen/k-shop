@@ -18,33 +18,9 @@ app.use(
     })
 )
 
-var options = {
-    dotfile: 'ignore',
-    extensions: ['htm', 'html'],
-    index: 'index.html'
-}
+app.use(express.static('./pub_html'));
 
-app.use('/', express.static('./pub_html', options));
-
-app.use('/index', isLoggedIn, function (req, res) {
-    res.sendFile("./pub_html/index.html", { root: __dirname });
-});
-
-app.use('/asdf', isLoggedIn, function (req, res) {
-    res.sendFile("./pub_html/index.html", { root: __dirname });
-});
-
-app.use('/api', routes);
+app.use(routes);
 
 var PORT = 3000;
 app.listen(PORT, () => console.log("Server started on port " + PORT));
-
-function isLoggedIn(req, res, next) {
-    console.log("[SERVER]", sess);
-    if (sess.user) {
-        return next();
-    }
-    else {
-        throw new Error('Error!!!!');
-    }
-}
