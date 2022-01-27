@@ -4,51 +4,50 @@
 <body>
 	<h2>Login</h2>
 
-	<form action="/login" method="post">
+	<form id="login">
 		<label for="username">Username:</label><br>
 		<input type="text" id="username" name="username" value=""><br>
 		<label for="password">Password:</label><br>
 		<input type="password" id="password" name="password" value=""><br><br>
 
-		<div id="failedLogin"></div>
-
-		<button type="submit">Login</button>
 	</form>
 
-	<button onclick="signup()">Signup</button>
+	<div id="faillogin"></div>
+
+	<div>
+		<button onclick="login()">Login</button>
+		<button onclick="signup()">Signup</button>
+	</div>
 
 
 
 </body>
 
-<script src="../scripts/jquery.min.js"></script>
+<script src="/scripts/jquery.min.js"></script>
 <script>
 	function login() {
-		var uname = document.getElementById("uname");
-		var pass = document.getElementById("pass");
-		var json = { "username": uname.value, "password": pass.value }
+		var username = document.getElementById("username");
+		var password = document.getElementById("password");
+		var json = { "username": username.value, "password": password.value }
 
 		$.ajax({
 			method: "post",
-			url: "/auth",
+			url: "/login",
 			data: json,
 
 			success: function (data) {
 				console.log("[AJAX]", data)
-				// if (data.rows.length > 0) {
-				// 	location.href = "http://localhost:3000/index.html";
-				// } else {
-				// 	var flogin = document.getElementById("faillogin");
-				// 	flogin.innerHTML = "Password or Username is Incorrect";
-				// }
+				if (data == true) {
+					location.href = "http://localhost:3000/index";
+				} else {
+					var flogin = document.getElementById("faillogin");
+					flogin.innerHTML = "Username or password is incorrect";
+				}
 			}
-		}
-		)
+		});
 	}
 	
 	function signup() {
 		location.href = "http://localhost:3000/signup.html";
-
-
 	}
 </script>
