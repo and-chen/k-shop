@@ -3,7 +3,7 @@ var router = express.Router();
 var controller = require('../controllers/appController.js');
 var middleware = require('../middlewares/appMiddleware.js');
 
-router.get('/index', middleware.isNotAuth, controller.get_index);
+router.get('/index', middleware.isAuth, controller.get_index);
 
 router.get('/login', controller.get_login);
 router.get('/signup', controller.get_signup);

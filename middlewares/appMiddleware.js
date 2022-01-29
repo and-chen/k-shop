@@ -1,4 +1,4 @@
-function isNotAuth(request, response, next) {
+function isAuth(request, response, next) {
     if (request.session.isAuth) {
         next();
     } else {
@@ -7,5 +7,5 @@ function isNotAuth(request, response, next) {
 };
 
 module.exports = {
-    isNotAuth
+    isAuth
 }
