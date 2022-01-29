@@ -1,17 +1,26 @@
 var express = require('express');
+var session = require('express-session');
+var routes = require("./routes/appRoute.js");
 
 var app = express();
 
+var sess;
+
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 
-var options = {
-    dotfile: 'ignore',
-    extensions: ['htm', 'html'],
-    index: 'index.html'
-}
+app.use(
+    session({
+        name: 'sessionname',
+        secret: 'zordon',
+        resave: false,
+        maxAge: 30 * 60 * 1000 // 30 minutes
+    })
+)
 
-app.use('/', express.static('./pub_html', options));
+app.use(express.static('./pub_html'));
+
+app.use(routes);
 
 var PORT = 3000;
 app.listen(PORT, () => console.log("Server started on port " + PORT));
