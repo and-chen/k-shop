@@ -26,39 +26,36 @@
 		var pass = document.getElementById("pass");
         var pass2 = document.getElementById("pass2");
         
-        if(pass.value!=pass2.value){
-            var failsignup = document.getElementById("failsignup");
-            failsignup.innerHTML = "Passwords are different";
-
-
-        }
-        else{
-		var json = { "username": uname.value, "password": pass.value }
+       
+        
+		var json = { "username": uname.value, "password": pass.value, "password2": pass2.value }
 
 		$.ajax({
 			method: "post",
-			url: "/api/signup",
+			url: "/signup",
 			data: json,
 
 			success: function (data) {
-				console.log("[AJAX]", data)
+				console.log(data);
+				if(data=="2"){
+					document.getElementById("failsignup").innerHTML = "PASSWORDS ARE DIFFERENT"
+				}
+				else if(data=="1"){
+					document.getElementById("failsignup").innerHTML = "Username Already Taken"
+				}
+				else{
+					location.href = "http://localhost:3000/login";
+				}
+
             
 				
-					location.href = "http://localhost:3000/index.html";
+					
 				
-			},
-			error: function (request, status,error){
-				console.log(request);
-				console.log(status);
-				console.log(error);
-				console.log(request["responseJSON"].message);
-				if(request["responseJSON"].message == "duplicate key value violates unique constraint \"users_username_key\""){
-			var failsignup = document.getElementById("failsignup");
-					failsignup.innerHTML = "Username already taken";
-				}
 			}
+			
+			
 		}
 		)
     }
-	}
+	
 </script>

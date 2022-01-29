@@ -12,8 +12,20 @@ function getUser(username, password, callback) {
         }
     } );
 }
+function createUser(username, password, callback) {
+    var query = "INSERT INTO users(username,password) VALUES($1,$2) RETURNING *;";
+    var values = [username, password];
+    pool.query(query, values, (error, result) => {
+        if (error) {
+            callback(false);
+        } else {
+            callback(true);
+        }
+    } );
+}
 
 // Export functions
 module.exports = {
-    getUser
+    getUser,
+    createUser
 };
