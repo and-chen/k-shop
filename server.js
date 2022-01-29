@@ -11,9 +11,9 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     session({
-        name: 'sessionname',
         secret: 'zordon',
         resave: false,
+        saveUninitialized: false,
         maxAge: 30 * 60 * 1000 // 30 minutes
     })
 )

@@ -15,40 +15,43 @@ function get_signup(request, response) {
 function post_login(request, response) {
     var { username, password } = request.body;
 
-    console.log("[CTRL]", username, password);
-
     model.getUser(username, password, (result) => {
-        console.log("[CTRL]", "Result: ", result.rows);
 
         if (result.rows.length > 0) {
+            request.session.isAuth = true;
+            request.session.username = username;
+            console.log("[CTRL]", request.session, "User login successful.")
+
             response.send(true);
         } else {
             response.send(false);
         }
     });
 }
+
 function post_signup(request, response) {
-    
-    var { username, password, password2} = request.body;
-    if(password!=password2){
+    var { username, password, password2 } = request.body;
+    if (password != password2) {
         response.send("2")
     }
-    else{
-
-    
-    model.createUser(username, password, (result) => {
-       console.log(result);
-       if (result==false) {
-        response.send("1");
-    } else{
-        response.send("0");
+    else {
+        model.createUser(username, password, (result) => {
+            console.log(result);
+            if (result == false) {
+                response.send("1");
+            } else {
+                response.send("0");
+            }
+        });
     }
+}
 
-
-
-
+function post_logout(request, response) {
+    request.session.destroy((error) => {
+        if (error) throw error;
+        console.log("[CTRL]", 'User logout.');
+        response.redirect('/login');
     });
-    }
 }
 
 module.exports = {
@@ -56,5 +59,6 @@ module.exports = {
     get_login,
     get_index,
     get_signup,
-    post_signup
+    post_signup,
+    post_logout
 }
