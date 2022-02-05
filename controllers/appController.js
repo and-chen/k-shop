@@ -19,6 +19,7 @@ function post_login(request, response) {
 
         if (result.rows.length > 0) {
             request.session.isAuth = true;
+            request.session.userid = result.rows[0].id;
             request.session.username = username;
             console.log("[CTRL]", request.session, "User login successful.")
 
@@ -54,11 +55,25 @@ function post_logout(request, response) {
     });
 }
 
+function post_user_listings(request, response) {
+    var currentUserId = request.params.id;
+    //console.log("[CTRL]", currentUserId);
+    model.getUserListings(currentUserId, (result) => {
+        if (result.rows.length > 0) {
+            //console.log("[CTRL]", result.rows);
+            response.send(result.rows);
+        } else {
+            response.send(false);
+        }
+    });
+}
+
 module.exports = {
     post_login,
     get_login,
     get_index,
     get_signup,
     post_signup,
-    post_logout
+    post_logout,
+    post_user_listings
 }
