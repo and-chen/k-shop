@@ -9,7 +9,7 @@ function get_login(request, response) {
     response.sendFile(path.resolve("views/login.html"));
 }
 function get_signup(request, response) {
-    response.sendFile(path.resolve("views/signup.html"));
+    response.render('signup');
 }
 
 function post_login(request, response) {
@@ -32,16 +32,18 @@ function post_login(request, response) {
 
 function post_signup(request, response) {
     var { username, password, password2 } = request.body;
-    if (password != password2) {
-        response.send("2")
+    if (password.length < 6) {
+        response.render("signup", {errorMessage: "Passwords is too short."});
+    } else if (password != password2) {
+        response.render("signup", {errorMessage: "Passwords do not match."});
     }
     else {
         model.createUser(username, password, (result) => {
             console.log(result);
             if (result == false) {
-                response.send("1");
+                response.render("signup", {errorMessage: "Username is already registered."});
             } else {
-                response.send("0");
+                response.redirect('/login');
             }
         });
     }
