@@ -4,7 +4,8 @@ var routes = require("./routes/appRoute.js");
 
 var app = express();
 
-var sess;
+app.set('view engine', 'pug');
+app.set('views', './views');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

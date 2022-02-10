@@ -2,7 +2,7 @@ var path = require('path');
 var model = require('../models/appModel.js');
 
 function get_index(request, response) {
-    response.sendFile(path.resolve("views/index.html"));
+    response.render('index');
 }
 
 function get_login(request, response) {
@@ -68,6 +68,12 @@ function post_user_listings(request, response) {
     });
 }
 
+function get_current_user(request, response) {
+    var currentUserId = request.session.userid;
+    console.log(request.session);
+    response.send(currentUserId);
+}
+
 module.exports = {
     post_login,
     get_login,
@@ -75,5 +81,6 @@ module.exports = {
     get_signup,
     post_signup,
     post_logout,
-    post_user_listings
+    post_user_listings,
+    get_current_user
 }
