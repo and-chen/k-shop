@@ -2,7 +2,11 @@ var path = require('path');
 var model = require('../models/appModel.js');
 
 function get_index(request, response) {
-    response.render('index');
+    var currentUserId = request.session.userid;
+
+    //call the model function
+
+    response.render('index', {userid: 9, listings: []});
 }
 
 function get_login(request, response) {
