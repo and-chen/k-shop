@@ -6,7 +6,7 @@ function get_index(request, response) {
 }
 
 function get_login(request, response) {
-    response.sendFile(path.resolve("views/login.html"));
+    response.render('login');
 }
 function get_signup(request, response) {
     response.render('signup');
@@ -23,9 +23,9 @@ function post_login(request, response) {
             request.session.username = username;
             console.log("[CTRL]", request.session, "User login successful.")
 
-            response.send(true);
+            response.redirect("/index")
         } else {
-            response.send(false);
+            response.render("login",{errormessage: "Username or password is incorrect."});
         }
     });
 }
